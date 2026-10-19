@@ -1,0 +1,1242 @@
+/* --------------------------------------------------------------------------
+   SCALE OF THE UNIVERSE & 20/10 LOVE STORY - ULTRA CLEAN LUXURY LENS
+   Clean UI (Name & Size ONLY), 3D Volumetric Particle Heart & Optical Zoom FX
+   -------------------------------------------------------------------------- */
+
+:root {
+  --color-pink-primary: #ff4d6d;
+  --color-pink-soft: #ff758f;
+  --color-pink-glow: #ffb3c1;
+  --color-gold: #ffd166;
+  --color-cyan: #38bdf8;
+  --color-dark-bg: #090207;
+  --color-parchment: #fffbf5;
+  --color-parchment-border: #f3d5b5;
+  --font-chubby: 'Baloo 2', 'Fredoka', 'Nunito', cursive, sans-serif;
+  --font-handwriting: 'Dancing Script', cursive;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-dark-bg);
+  color: #ffffff;
+  font-family: var(--font-chubby);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body.mobile-optimized {
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  background: radial-gradient(circle at 50% 30%, #240418 0%, #0d020a 55%, #050104 100%);
+}
+
+/* Fullscreen 3D WebGL Canvas for Floating Glowing Hearts */
+#webglCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Ambient Cinematic Vignette */
+.cinematic-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.95);
+  background: radial-gradient(circle at center, transparent 30%, rgba(9, 2, 7, 0.5) 70%, rgba(9, 2, 7, 0.95) 100%);
+}
+
+/* Subtle Floating Music Toggle (Top Right Corner - Avoids overlap with nav buttons) */
+.floating-music-btn { display: none !important; }
+.floating-music-btn:hover, .floating-music-btn:active {
+  transform: scale(1.06);
+  background: rgba(255, 77, 109, 0.38);
+  box-shadow: 0 0 25px rgba(255, 77, 109, 0.65);
+}
+.floating-music-btn.playing {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  animation: pulseMusicBtn 2s infinite ease-in-out;
+}
+@keyframes pulseMusicBtn {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 209, 102, 0.35); }
+  50% { box-shadow: 0 0 28px rgba(255, 209, 102, 0.75); }
+}
+.music-hint-badge {
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   PHASE 1: THE COSMIC SCALE JOURNEY (CLEAN LUXURY CAMERA LENS)
+   ========================================================================== */
+.scale-journey-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 16px 24px 16px;
+}
+.scale-journey-container.active {
+  display: flex;
+}
+
+/* Center Stage View */
+.stage-scale-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 440px;
+  margin: auto 0;
+  text-align: center;
+}
+
+/* ==========================================================================
+   AUTHENTIC LUXURY CAMERA LENS (HOÀN TOÀN KHÔNG CÓ CHỮ, CỰC ĐẸP & TINH TẾ)
+   ========================================================================== */
+.camera-lens-assembly {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: grab;
+  /* Deep Luxury Drop Shadow */
+  box-shadow: 
+    0 28px 70px rgba(0, 0, 0, 0.95),
+    0 0 45px rgba(255, 77, 109, 0.28);
+}
+.camera-lens-assembly:active {
+  cursor: grabbing;
+}
+
+/* 1. Outer Knurled Metal Barrel (Răng cưa kim loại chống trượt) */
+.lens-barrel-knurled {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: 
+    repeating-conic-gradient(from 0deg, #18181b 0deg 1.5deg, #27272a 1.5deg 3deg, #111113 3deg 4.5deg);
+  border: 3px solid #3f3f46;
+  box-shadow: 
+    inset 0 3px 6px rgba(255, 255, 255, 0.3),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.9),
+    0 12px 30px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Autofocus Ring Spin Effect */
+.lens-barrel-knurled.focus-spin {
+  animation: knurledRingSpin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes knurledRingSpin {
+  0% { transform: rotate(0deg); }
+  40% { transform: rotate(24deg); }
+  75% { transform: rotate(-8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 2. Luxury Dual Accent Ring (Viền nhẫn Ruby & Vàng hoàng kim) */
+.lens-luxury-red-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 3.5px solid #e11d48;
+  box-shadow: 
+    0 0 16px rgba(225, 29, 72, 0.85),
+    inset 0 0 6px #ff758f;
+  pointer-events: none;
+}
+
+.lens-luxury-gold-stripe {
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 209, 102, 0.7);
+  pointer-events: none;
+}
+
+/* 3. Sleek Bezel Ring (Vành kim loại đen bóng gương, KHÔNG có chữ) */
+.lens-bezel-rim {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #27272a 0%, #18181b 50%, #09090b 100%);
+  border: 2px solid #3f3f46;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.25),
+    inset 0 0 20px rgba(0, 0, 0, 0.95);
+  pointer-events: none;
+}
+
+/* 4. Mechanical Aperture Shutter Diaphragm (Chớp đóng mở cơ học cực nhanh khi chuyển cảnh) */
+.lens-aperture-iris {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: transparent;
+  pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 12;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.lens-aperture-iris.iris-snap {
+  opacity: 1;
+}
+
+.iris-blade {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: linear-gradient(135deg, #18181b 0%, #09090b 60%, #000000 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0 80% 0 80%;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.95);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.blade-1 { transform: rotate(0deg) translate(80px, -30px); }
+.blade-2 { transform: rotate(45deg) translate(80px, -30px); }
+.blade-3 { transform: rotate(90deg) translate(80px, -30px); }
+.blade-4 { transform: rotate(135deg) translate(80px, -30px); }
+.blade-5 { transform: rotate(180deg) translate(80px, -30px); }
+.blade-6 { transform: rotate(225deg) translate(80px, -30px); }
+.blade-7 { transform: rotate(270deg) translate(80px, -30px); }
+.blade-8 { transform: rotate(315deg) translate(80px, -30px); }
+
+/* Diaphragm snap on step switch */
+.lens-aperture-iris.iris-snap .blade-1 { transform: rotate(20deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-2 { transform: rotate(65deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-3 { transform: rotate(110deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-4 { transform: rotate(155deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-5 { transform: rotate(200deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-6 { transform: rotate(245deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-7 { transform: rotate(290deg) translate(22px, -10px); }
+.lens-aperture-iris.iris-snap .blade-8 { transform: rotate(335deg) translate(22px, -10px); }
+
+/* 5. Optical Multi-Coated Curved Glass Element (Thấu kính quang học lộng lẫy) */
+.lens-optical-glass {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #000000;
+  box-shadow: 
+    inset 0 0 50px rgba(0, 0, 0, 0.95),
+    0 0 35px rgba(255, 77, 109, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  z-index: 3;
+}
+
+/* Cinematic Camera Shutter & Optical Rack-Focus Snap */
+.lens-optical-glass.focus-transition {
+  animation: lensFocusZoom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes lensFocusZoom {
+  0% { transform: scale(1); filter: blur(0px) contrast(1.1) brightness(1); }
+  25% { transform: scale(0.92) rotate(-1.5deg); filter: blur(12px) contrast(1.3) brightness(1.4); }
+  65% { transform: scale(1.05) rotate(0.8deg); filter: blur(3px) contrast(1.15) brightness(1.12); }
+  100% { transform: scale(1) rotate(0deg); filter: blur(0px) contrast(1.1) brightness(1); }
+}
+
+/* Shutter Flash Light Burst */
+.lens-flash-burst {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 117, 143, 0.65) 50%, transparent 80%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.22s ease;
+}
+
+/* Multi-Coated Chromatic Glare Reflections (Lóa quang học tím & xanh ngọc) */
+.lens-glare-reflection {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.glare-violet {
+  background: radial-gradient(circle at 25% 25%, rgba(217, 70, 239, 0.45) 0%, transparent 55%);
+  transition: transform 0.4s ease;
+}
+.glare-cyan {
+  background: radial-gradient(circle at 75% 75%, rgba(56, 189, 248, 0.35) 0%, transparent 60%);
+  transition: transform 0.4s ease;
+}
+
+/* Anamorphic Blue/White Glare Streak */
+.glare-streak {
+  background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.6) 45%, rgba(255, 255, 255, 0.95) 50%, rgba(56, 189, 248, 0.6) 55%, transparent 100%);
+  height: 4px;
+  top: 50%;
+  left: -20%;
+  right: -20%;
+  transform: translateY(-50%) rotate(-25deg) scaleX(0.2);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+.glare-streak.flash-active {
+  opacity: 0.95;
+  transform: translateY(-50%) rotate(-25deg) scaleX(1.4);
+}
+
+.lens-glass-concentric-ring {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+
+/* Visual Container Inside Lens */
+.lens-photo-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visual-img-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.visual-photo-render {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Ant Zoom */
+.stage-ant-view .visual-photo-render {
+  transform: scale(1.15);
+  filter: contrast(1.12) saturate(1.2);
+}
+
+/* Elephant */
+.stage-elephant-view .visual-photo-render {
+  filter: contrast(1.1) brightness(0.96);
+  animation: elephantSubtleBreathe 5s ease-in-out infinite alternate;
+}
+@keyframes elephantSubtleBreathe {
+  0% { transform: scale(1.02); }
+  100% { transform: scale(1.08); }
+}
+
+/* Earth Rotating */
+.stage-earth-view .visual-photo-render {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.7);
+  animation: rotateEarth 24s linear infinite;
+}
+@keyframes rotateEarth {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Galaxy Rotating */
+.stage-galaxy-view .visual-photo-render {
+  width: 110%;
+  height: 110%;
+  filter: contrast(1.25) saturate(1.3);
+  animation: rotateGalaxy 30s linear infinite;
+}
+@keyframes rotateGalaxy {
+  from { transform: rotate(0deg) scale(1.1); }
+  to { transform: rotate(360deg) scale(1.1); }
+}
+
+/* Universe Pulsing */
+.stage-universe-view .visual-photo-render {
+  width: 100%;
+  height: 100%;
+  animation: universeGlowPulse 4s ease-in-out infinite alternate;
+}
+@keyframes universeGlowPulse {
+  0% { transform: scale(1); filter: brightness(0.95); }
+  100% { transform: scale(1.1); filter: brightness(1.25); }
+}
+
+/* ==========================================================================
+   STAGE 6: TRUE 3D VOLUMETRIC PARTICLE HEART (7,000+ GLOWING STARDUST POINTS)
+   ========================================================================== */
+.heart-3d-particle-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #3d0018 0%, #170008 65%, #050002 100%);
+}
+
+#heart3DCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+}
+#heart3DCanvas:active {
+  cursor: grabbing;
+}
+
+/* ==========================================================================
+   CLEAN CHUBBY INFO: ONLY TÊN (NAME) & KÍCH THƯỚC (SIZE)
+   ========================================================================== */
+.scale-info-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  max-width: 420px;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scale-info-panel.morphing {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+}
+
+/* Chubby Main Title (TÊN) */
+.scale-main-title {
+  font-family: var(--font-chubby);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff 20%, #ffd1dc 60%, #ff758f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 12px rgba(255, 77, 109, 0.55));
+  margin: 0;
+  text-align: center;
+}
+
+/* Chubby Measure Badge (KÍCH THƯỚC) */
+.scale-measure-badge {
+  font-family: var(--font-chubby);
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffe4e6;
+  background: rgba(255, 77, 109, 0.25);
+  border: 2px solid rgba(255, 117, 143, 0.6);
+  padding: 7px 22px;
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(255, 77, 109, 0.35);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+/* ==========================================================================
+   INTERACTIVE STAGE & HEART EXPANSION STYLING
+   ========================================================================== */
+.interactive-stage {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px 40px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Heart Expansion (Trái tim phóng to ra toàn màn hình) */
+.camera-lens-assembly.heart-expanded {
+  box-shadow: none;
+  margin-bottom: 4px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.camera-lens-assembly.heart-expanded .lens-barrel-knurled,
+.camera-lens-assembly.heart-expanded .lens-luxury-red-ring,
+.camera-lens-assembly.heart-expanded .lens-luxury-gold-stripe,
+.camera-lens-assembly.heart-expanded .lens-bezel-rim,
+.camera-lens-assembly.heart-expanded .lens-aperture-iris,
+.camera-lens-assembly.heart-expanded .lens-flash-burst,
+.camera-lens-assembly.heart-expanded .lens-glare-reflection,
+.camera-lens-assembly.heart-expanded .lens-glass-concentric-ring {
+  opacity: 0 !important;
+  pointer-events: none;
+  transform: scale(1.18);
+  transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.camera-lens-assembly.heart-expanded .lens-optical-glass {
+  width: 100%;
+  max-width: 400px;
+  height: 290px;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  overflow: visible;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.camera-lens-assembly.heart-expanded .heart-3d-particle-container {
+  background: transparent;
+}
+
+.camera-lens-assembly.heart-expanded.finale-compact {
+  margin-bottom: 2px;
+  width: 125px;
+  height: 125px;
+}
+
+.camera-lens-assembly.heart-expanded.finale-compact .lens-optical-glass {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+}
+
+/* Info Panel Fade Out on Heart Expansion */
+.scale-info-panel.hidden {
+  opacity: 0 !important;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   ROMANTIC STORY TEXT DISPLAY (CHỮ TO, RÕ NÉT 100%, PHÁT SÁNG LỘNG LẪY & ZERO LAG)
+   ========================================================================== */
+.romantic-story-display {
+  width: 100%;
+  max-width: 440px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  z-index: 30;
+  pointer-events: none;
+  position: relative;
+  padding: 0 16px;
+}
+
+.story-text-shimmer {
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(18px) scale(0.92);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  will-change: transform, opacity;
+  background: rgba(22, 4, 18, 0.78);
+  border: 1.5px solid rgba(255, 117, 143, 0.45);
+  box-shadow: 0 8px 32px rgba(255, 77, 109, 0.28), inset 0 0 18px rgba(255, 117, 143, 0.15);
+  border-radius: 22px;
+  padding: 16px 24px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.story-text-shimmer.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.story-text-shimmer.morphing {
+  opacity: 0;
+  transform: translateY(-12px) scale(0.92);
+  transition: transform 0.22s ease-in, opacity 0.2s ease-in;
+}
+
+/* Background Soft Nebula Glow Aura */
+.story-glow-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 110px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(255, 77, 109, 0.38) 0%, rgba(255, 117, 143, 0.16) 50%, transparent 80%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: -1;
+  animation: auraBreathe 3s ease-in-out infinite alternate;
+}
+
+@keyframes auraBreathe {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+/* Crisp, Beautiful, High-End Typography */
+.story-main-text {
+  font-family: var(--font-chubby);
+  font-size: 21px;
+  font-weight: 900;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  background: linear-gradient(135deg, #ffffff 15%, #ffe4e6 50%, #ffd166 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: 
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95))
+    drop-shadow(0 0 14px rgba(255, 77, 109, 0.65));
+  margin: 0;
+  text-align: center;
+}
+
+/* Shimmering Star Sparkle Accents */
+.story-sparkle-accents {
+  position: absolute;
+  inset: -12px;
+  pointer-events: none;
+}
+
+.sparkle-star {
+  position: absolute;
+  font-size: 14px;
+  color: var(--color-gold);
+  text-shadow: 0 0 10px #ffd166;
+  opacity: 0.8;
+  animation: starTwinkle 2.2s infinite ease-in-out;
+}
+.sparkle-star.s1 { top: -8px; left: 15%; animation-delay: 0s; }
+.sparkle-star.s2 { bottom: -8px; right: 20%; animation-delay: 0.8s; font-size: 16px; color: #ff758f; }
+.sparkle-star.s3 { top: 30%; right: 5%; animation-delay: 1.4s; font-size: 12px; }
+
+@keyframes starTwinkle {
+  0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.3; }
+  50% { transform: scale(1.3) rotate(90deg); opacity: 1; text-shadow: 0 0 16px #ffd166, 0 0 24px #ff4d6d; }
+}
+
+/* ==========================================================================
+   FINALE CLIMAX: 3 ẢNH KỶ NIỆM & BỨC THƯ TÌNH HỒNG CHÚC 20/10 GỬI EMBE TRMYY
+   ========================================================================== */
+.finale-card-wrap {
+  display: none;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 2px;
+  z-index: 25;
+  animation: finaleCardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  padding-bottom: 20px;
+}
+
+.finale-card-wrap.active {
+  display: block;
+}
+
+@keyframes finaleCardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   FINALE CLIMAX: 3 ẢNH POLAROID & BỨC THƯ TÌNH HỒNG HOÀNG GIA GỬI EMBE TRMYY
+   ========================================================================== */
+.finale-card-wrap {
+  display: none;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 2px;
+  z-index: 25;
+  animation: finaleCardEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  padding-bottom: 25px;
+}
+
+.finale-card-wrap.active {
+  display: block;
+}
+
+@keyframes finaleCardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 1. Bộ 3 Ảnh Kỷ Niệm Polaroid Đáng Yêu (Trio Romantic Polaroid Photos) */
+.finale-photo-trio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.trio-item {
+  flex: 1;
+  max-width: 125px;
+  background: #ffffff;
+  padding: 6px 6px 10px 6px;
+  border-radius: 12px;
+  box-shadow: 
+    0 12px 28px rgba(0, 0, 0, 0.65),
+    0 0 15px rgba(255, 117, 143, 0.35);
+  text-align: center;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.trio-washi-tape {
+  height: 12px;
+  width: 44px;
+  margin: -11px auto 4px auto;
+  background: rgba(255, 117, 143, 0.55);
+  border-radius: 2px;
+  transform: rotate(-3deg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.trio-washi-tape.tape-gold {
+  background: rgba(255, 209, 102, 0.7);
+  transform: rotate(2deg);
+}
+
+.trio-item.item-1 {
+  transform: rotate(-3.5deg);
+}
+.trio-item.item-2 {
+  transform: rotate(0deg) translateY(-6px);
+  border: 2px solid #ff758f;
+  box-shadow: 
+    0 14px 35px rgba(0, 0, 0, 0.75),
+    0 0 22px rgba(255, 77, 109, 0.5);
+}
+.trio-item.item-3 {
+  transform: rotate(3.5deg);
+}
+
+.trio-frame {
+  width: 100%;
+  height: 102px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffe4e6;
+}
+
+.trio-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.trio-item:hover .trio-img {
+  transform: scale(1.08);
+}
+
+.trio-caption {
+  display: block;
+  font-family: var(--font-handwriting);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #be123c;
+  margin-top: 6px;
+  line-height: 1.2;
+}
+
+/* 2. BỨC THƯ TÌNH HỒNG HOÀNG GIA ĐÀNG HOÀNG VỚI VIỀN HOA VĂN & BÚT MÁY MẠ VÀNG */
+.romantic-letter-card {
+  position: relative;
+  background-color: #fff9fb !important;
+  background-image: 
+    repeating-linear-gradient(transparent, transparent 33px, rgba(244, 114, 182, 0.22) 33px, rgba(244, 114, 182, 0.22) 34px),
+    linear-gradient(170deg, #fffafd 0%, #fff0f5 45%, #ffe6ee 100%);
+  border: 2.5px solid #f472b6;
+  border-radius: 24px;
+  padding: 42px 20px 24px 20px;
+  box-shadow: 
+    0 22px 60px rgba(0, 0, 0, 0.7),
+    0 0 28px rgba(255, 117, 143, 0.4),
+    inset 0 0 0 3px #ffffff,
+    inset 0 0 0 5.5px #f59e0b,
+    inset 0 0 40px rgba(254, 215, 226, 0.45);
+  text-align: left;
+  z-index: 50;
+}
+
+/* Ornate Victorian Gold Baroque Corners */
+.corner-filigree {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  pointer-events: none;
+  opacity: 0.95;
+  filter: drop-shadow(0 1px 2px rgba(180, 83, 9, 0.45));
+}
+.corner-filigree.corner-tl { top: 6px; left: 6px; }
+.corner-filigree.corner-tr { top: 6px; right: 6px; }
+.corner-filigree.corner-bl { bottom: 6px; left: 6px; }
+.corner-filigree.corner-br { bottom: 6px; right: 6px; }
+
+/* Con Dấu Sáp 3D Hoàng Gia (Royal 3D Wax Seal with Draped Ribbons) */
+.royal-wax-seal-container {
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 15;
+}
+
+.wax-ribbon {
+  position: absolute;
+  top: 28px;
+  width: 14px;
+  height: 34px;
+  background: linear-gradient(180deg, #be123c 0%, #881337 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  z-index: -1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+}
+.wax-ribbon.ribbon-left {
+  left: -5px;
+  transform: rotate(-18deg);
+}
+.wax-ribbon.ribbon-right {
+  right: -5px;
+  transform: rotate(18deg);
+}
+
+.royal-wax-seal {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff4d6d 0%, #c01535 55%, #7f0d22 100%);
+  box-shadow: 
+    0 6px 18px rgba(127, 13, 34, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.65),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.wax-seal-inner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.wax-heart-symbol {
+  font-size: 15px;
+  color: #ffd166;
+  line-height: 1;
+}
+
+.wax-seal-text {
+  font-family: var(--font-chubby);
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  margin-top: 1px;
+  color: #fff;
+}
+
+/* Tem Bưu Chính Cổ Điển Tình Yêu (Vintage Love Stamp in Top Right) */
+.vintage-love-stamp {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transform: rotate(3deg);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stamp-inner {
+  background: #ffe4e6;
+  border: 1.5px dashed #f43f5e;
+  border-radius: 6px;
+  padding: 3px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.stamp-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.stamp-text {
+  font-family: var(--font-chubby);
+  font-size: 7.5px;
+  font-weight: 900;
+  color: #be123c;
+  letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+
+.stamp-value {
+  font-family: var(--font-chubby);
+  font-size: 7px;
+  font-weight: 800;
+  color: #9f1239;
+}
+
+.stamp-postmark {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+  opacity: 0.55;
+}
+
+.postmark-line {
+  width: 16px;
+  height: 1.2px;
+  background: #e11d48;
+}
+
+/* Tiêu Đề Thư Nắn Nót Lãng Mạn */
+.letter-header-area {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.letter-badge-tag {
+  display: inline-block;
+  font-family: var(--font-chubby);
+  font-size: 11px;
+  font-weight: 800;
+  color: #e11d48;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 77, 109, 0.14);
+  padding: 3px 12px;
+  border-radius: 999px;
+  margin-bottom: 4px;
+  border: 1px solid rgba(244, 114, 182, 0.3);
+}
+
+.letter-salutation {
+  font-family: 'Dancing Script', 'Caveat', cursive;
+  font-size: 27px;
+  font-weight: 700;
+  color: #881337;
+  text-align: center;
+  margin: 4px 0 6px 0;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.95);
+  line-height: 1.25;
+}
+
+.letter-ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 75%;
+  margin: 0 auto 12px auto;
+}
+
+.divider-scroll {
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+}
+
+.divider-gem {
+  font-size: 14px;
+}
+
+/* Nội Dung Thư Có Dòng Kẻ & Bút Máy Thật Viết Từng Chữ */
+.letter-body-content {
+  font-family: 'Caveat', 'Dancing Script', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 34px;
+  color: #4a044e;
+  padding: 4px 10px 4px 12px;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.letter-typewriter-text {
+  color: #4a044e;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-shadow: 0 0.5px 1px rgba(255, 255, 255, 0.5);
+}
+
+/* Exquisite Royal Luxury Calligraphy Pen & Ink Stardust */
+.calligraphy-pen-holder {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  position: relative;
+  vertical-align: baseline;
+  pointer-events: none;
+  white-space: normal;
+  margin-left: 2px;
+}
+
+.royal-calligraphy-pen {
+  position: absolute;
+  left: -6px;
+  bottom: -6px;
+  width: 54px;
+  height: 54px;
+  transform-origin: 6px 56px;
+  animation: penWriteStroke 0.26s infinite alternate ease-in-out;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+  display: block;
+}
+
+@keyframes penWriteStroke {
+  0% { transform: translate(0, 0) rotate(-2deg); }
+  30% { transform: translate(1px, -2px) rotate(1deg); }
+  70% { transform: translate(-1px, 1px) rotate(-3.5deg); }
+  100% { transform: translate(1.5px, -1px) rotate(2deg); }
+}
+
+.pen-nib-sparkle {
+  position: absolute;
+  left: -3px;
+  bottom: -3px;
+  font-size: 13px;
+  color: #ffd166;
+  text-shadow: 0 0 8px #ffd166, 0 0 14px #ff4d6d;
+  animation: nibSparkleGlow 0.35s infinite alternate;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes nibSparkleGlow {
+  0% { opacity: 0.6; transform: scale(0.8) rotate(0deg); }
+  100% { opacity: 1; transform: scale(1.3) rotate(45deg); }
+}
+
+.pen-ink-spot {
+  position: absolute;
+  left: -2px;
+  bottom: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e11d48;
+  opacity: 0.8;
+  filter: blur(1px);
+  animation: inkSpotPulse 0.3s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes inkSpotPulse {
+  0% { transform: scale(0.7); opacity: 0.5; }
+  100% { transform: scale(1.2); opacity: 0.9; }
+}
+
+.calligraphy-pen-holder.finished .royal-calligraphy-pen {
+  animation: penLiftAndFly 0.9s forwards ease-in-out;
+}
+
+@keyframes penLiftAndFly {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  50% { transform: translate(18px, -28px) rotate(-18deg) scale(1.08); opacity: 0.85; }
+  100% { transform: translate(38px, -58px) rotate(-35deg) scale(0.9); opacity: 0; }
+}
+
+/* Chữ Ký Nắn Nót & Nụ Hôn Yêu Thương Dành Riêng Cho Embe Trmyy */
+.letter-signature-wrap {
+  margin-top: 14px;
+  text-align: right;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  padding-right: 8px;
+}
+
+.letter-signature-wrap.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.letter-signature {
+  font-family: 'Dancing Script', 'Caveat', cursive;
+  font-size: 29px;
+  color: #be123c;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95);
+  line-height: 1.2;
+}
+
+.signature-details {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.signature-date {
+  font-family: var(--font-chubby);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #9f1239;
+  opacity: 0.85;
+}
+
+.signature-kiss-stamp {
+  font-size: 22px;
+  display: inline-block;
+  transform: rotate(-10deg);
+  animation: kissThump 0.5s ease-out;
+  filter: drop-shadow(0 2px 4px rgba(225, 29, 72, 0.4));
+}
+
+@keyframes kissThump {
+  0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+  70% { transform: scale(1.25) rotate(-8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-10deg); opacity: 1; }
+}
+
+/* Replay Button */
+.btn-replay-journey {
+  margin: 18px auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff4d6d, #be123c);
+  border: 1.5px solid #ffffff;
+  color: #ffffff;
+  font-family: var(--font-chubby);
+  font-size: 13.5px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(190, 18, 60, 0.45);
+  transition: all 0.25s ease;
+  width: fit-content;
+}
+
+.btn-replay-journey:hover, .btn-replay-journey:active {
+  transform: scale(1.05);
+  box-shadow: 0 10px 28px rgba(190, 18, 60, 0.65);
+}
+
+/* ==========================================================================
+   SUBTLE TAP SCREEN HINT
+   ========================================================================== */
+.tap-screen-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #f1f5f9;
+  font-family: var(--font-chubby);
+  font-size: 13px;
+  font-weight: 800;
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity 0.4s ease;
+}
+
+.tap-screen-hint.hidden {
+  opacity: 0;
+}
+
+.hint-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4d6d;
+  box-shadow: 0 0 10px #ff4d6d;
+  animation: pulseHintDot 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseHintDot {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.6); opacity: 1; box-shadow: 0 0 16px #ff758f; }
+}
