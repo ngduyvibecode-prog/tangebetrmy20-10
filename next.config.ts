@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/qr-20-10',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

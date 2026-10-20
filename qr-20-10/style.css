@@ -125,8 +125,6 @@ body.mobile-optimized {
   align-items: center;
   justify-content: center;
   margin-bottom: 22px;
-  perspective: 1000px;
-  transform-style: preserve-3d;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: grab;
   /* Deep Luxury Drop Shadow */
@@ -247,33 +245,36 @@ body.mobile-optimized {
 .lens-aperture-iris.iris-snap .blade-7 { transform: rotate(290deg) translate(22px, -10px); }
 .lens-aperture-iris.iris-snap .blade-8 { transform: rotate(335deg) translate(22px, -10px); }
 
-/* 5. Optical Multi-Coated Curved Glass Element (Thấu kính quang học lộng lẫy) */
+/* 5. Optical Multi-Coated Curved Glass Element (Cắt tròn tuyệt đối 100%, không bao giờ lọt góc vuông ra ngoài) */
 .lens-optical-glass {
   position: relative;
   width: 220px;
   height: 220px;
-  border-radius: 50%;
-  overflow: hidden;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  -webkit-clip-path: circle(50% at 50% 50%) !important;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);
   background: #000000;
   box-shadow: 
     inset 0 0 50px rgba(0, 0, 0, 0.95),
     0 0 35px rgba(255, 77, 109, 0.35);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
-  transform-style: preserve-3d;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
   z-index: 3;
+  isolation: isolate;
 }
 
-/* Cinematic Camera Shutter & Optical Rack-Focus Snap */
+/* Cinematic Camera Shutter Snap (Mượt mà 60fps trên mobile) */
 .lens-optical-glass.focus-transition {
-  animation: lensFocusZoom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: lensFocusSnap 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes lensFocusZoom {
-  0% { transform: scale(1); filter: blur(0px) contrast(1.1) brightness(1); }
-  25% { transform: scale(0.92) rotate(-1.5deg); filter: blur(12px) contrast(1.3) brightness(1.4); }
-  65% { transform: scale(1.05) rotate(0.8deg); filter: blur(3px) contrast(1.15) brightness(1.12); }
-  100% { transform: scale(1) rotate(0deg); filter: blur(0px) contrast(1.1) brightness(1); }
+@keyframes lensFocusSnap {
+  0% { transform: scale(1); opacity: 1; }
+  40% { transform: scale(0.95); opacity: 0.82; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 /* Shutter Flash Light Burst */
@@ -329,7 +330,7 @@ body.mobile-optimized {
   pointer-events: none;
 }
 
-/* Visual Container Inside Lens */
+/* Visual Container Inside Lens (Bảo đảm tròn tuyệt đối 100% trên mọi trình duyệt) */
 .lens-photo-content {
   width: 100%;
   height: 100%;
@@ -337,74 +338,64 @@ body.mobile-optimized {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  -webkit-clip-path: circle(50% at 50% 50%) !important;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);
 }
 
 .visual-img-container {
   width: 100%;
   height: 100%;
   position: relative;
-  overflow: hidden;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  -webkit-clip-path: circle(50% at 50% 50%) !important;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #000000;
 }
+
 .visual-photo-render {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  -webkit-clip-path: circle(50% at 50% 50%) !important;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  mask-image: radial-gradient(circle, white 100%, black 100%);
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  will-change: transform;
 }
 
-/* Ant Zoom */
+/* Individual stage enhancements - sắc nét, tinh tế, KHÔNG giật lag */
 .stage-ant-view .visual-photo-render {
-  transform: scale(1.15);
-  filter: contrast(1.12) saturate(1.2);
+  filter: contrast(1.15) saturate(1.2);
 }
 
-/* Elephant */
 .stage-elephant-view .visual-photo-render {
   filter: contrast(1.1) brightness(0.96);
-  animation: elephantSubtleBreathe 5s ease-in-out infinite alternate;
-}
-@keyframes elephantSubtleBreathe {
-  0% { transform: scale(1.02); }
-  100% { transform: scale(1.08); }
 }
 
-/* Earth Rotating */
 .stage-earth-view .visual-photo-render {
-  width: 90%;
-  height: 90%;
-  border-radius: 50%;
-  box-shadow: 0 0 35px rgba(56, 189, 248, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.7);
-  animation: rotateEarth 24s linear infinite;
-}
-@keyframes rotateEarth {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  filter: contrast(1.1) brightness(1.05);
+  box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.6);
 }
 
-/* Galaxy Rotating */
 .stage-galaxy-view .visual-photo-render {
-  width: 110%;
-  height: 110%;
-  filter: contrast(1.25) saturate(1.3);
-  animation: rotateGalaxy 30s linear infinite;
-}
-@keyframes rotateGalaxy {
-  from { transform: rotate(0deg) scale(1.1); }
-  to { transform: rotate(360deg) scale(1.1); }
+  filter: contrast(1.2) saturate(1.25);
 }
 
-/* Universe Pulsing */
 .stage-universe-view .visual-photo-render {
-  width: 100%;
-  height: 100%;
-  animation: universeGlowPulse 4s ease-in-out infinite alternate;
-}
-@keyframes universeGlowPulse {
-  0% { transform: scale(1); filter: brightness(0.95); }
-  100% { transform: scale(1.1); filter: brightness(1.25); }
+  filter: contrast(1.15) brightness(1.1);
 }
 
 /* ==========================================================================
@@ -1240,3 +1231,39 @@ body.mobile-optimized {
   0%, 100% { transform: scale(1); opacity: 0.6; }
   50% { transform: scale(1.6); opacity: 1; box-shadow: 0 0 16px #ff758f; }
 }
+
+/* ==========================================================================
+   MOBILE SCREEN RESPONSIVENESS & ZERO-LAG OPTIMIZATION
+   ========================================================================== */
+@media (max-width: 440px) {
+  .camera-lens-assembly {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 16px;
+  }
+  .lens-optical-glass {
+    width: 195px;
+    height: 195px;
+  }
+  .scale-main-title {
+    font-size: 22px;
+  }
+  .scale-measure-badge {
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+  .story-main-text {
+    font-size: 24px;
+    padding: 0 12px;
+  }
+  .romantic-letter-card {
+    padding: 24px 18px 20px 18px;
+  }
+  .trio-item {
+    width: 95px;
+  }
+  .trio-frame {
+    height: 90px;
+  }
+}
+

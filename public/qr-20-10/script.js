@@ -396,210 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  /* ========================================================================
-     3. 3D FLAPPING BUTTERFLY MODEL (BƯỚM 3D THÂN VÀ CÁNH HOÀN MỸ, VỖ CÁNH BAY)
-     ======================================================================== */
-  function createWingTexture(colorHue = 'pink') {
-    const canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 256, 256);
 
-    ctx.save();
-    // 1. Forewing Path (Cánh trước uốn lượn mềm mại từ gốc x=0)
-    ctx.beginPath();
-    ctx.moveTo(2, 128); // Wing root right at x=0
-    ctx.bezierCurveTo(20, 25, 140, 10, 235, 45);
-    ctx.bezierCurveTo(255, 80, 225, 155, 145, 170);
-    ctx.bezierCurveTo(80, 175, 30, 150, 2, 128);
-    ctx.closePath();
-
-    // Vibrant Glow Gradient
-    let grad = ctx.createRadialGradient(20, 128, 10, 130, 95, 130);
-    let shadowCol = '#ff2d55';
-    if (colorHue === 'cyan') {
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.25, '#67e8f9');
-      grad.addColorStop(0.65, '#0284c7');
-      grad.addColorStop(1, '#0c4a6e');
-      shadowCol = '#00f0ff';
-    } else if (colorHue === 'gold') {
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.25, '#fde047');
-      grad.addColorStop(0.65, '#d97706');
-      grad.addColorStop(1, '#78350f');
-      shadowCol = '#fbbf24';
-    } else if (colorHue === 'purple') {
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.25, '#f0abfc');
-      grad.addColorStop(0.65, '#9333ea');
-      grad.addColorStop(1, '#3b0764');
-      shadowCol = '#c084fc';
-    } else {
-      // pink
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.25, '#f472b6');
-      grad.addColorStop(0.65, '#e11d48');
-      grad.addColorStop(1, '#4c0519');
-      shadowCol = '#ff2d55';
-    }
-    ctx.fillStyle = grad;
-    ctx.shadowColor = shadowCol;
-    ctx.shadowBlur = 16;
-    ctx.fill();
-
-    // 2. Hindwing Path (Cánh sau)
-    ctx.beginPath();
-    ctx.moveTo(2, 128);
-    ctx.bezierCurveTo(35, 160, 90, 185, 135, 236);
-    ctx.bezierCurveTo(105, 252, 55, 246, 25, 208);
-    ctx.bezierCurveTo(10, 180, 5, 150, 2, 128);
-    ctx.closePath();
-    ctx.fill();
-
-    // 3. Luminous Wing Veins (Gân cánh phát sáng lộng lẫy)
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.lineWidth = 2.4;
-    ctx.shadowColor = '#ffffff';
-    ctx.shadowBlur = 8;
-    ctx.beginPath();
-    ctx.moveTo(2, 128); ctx.quadraticCurveTo(90, 85, 210, 55);
-    ctx.moveTo(2, 128); ctx.quadraticCurveTo(105, 115, 215, 115);
-    ctx.moveTo(2, 128); ctx.quadraticCurveTo(95, 138, 165, 154);
-    ctx.moveTo(90, 85); ctx.quadraticCurveTo(145, 70, 220, 88);
-    ctx.moveTo(2, 128); ctx.quadraticCurveTo(55, 170, 105, 222);
-    ctx.moveTo(2, 128); ctx.quadraticCurveTo(40, 184, 68, 218);
-    ctx.stroke();
-
-    // 4. Stardust Margin Gems (Chấm ngọc phát sáng viền cánh)
-    const marginGems = [
-      [220, 55], [230, 82], [222, 114], [200, 140], [162, 160],
-      [122, 232], [90, 238], [55, 222], [32, 194]
-    ];
-    ctx.fillStyle = '#ffffff';
-    ctx.shadowColor = '#ffffff';
-    ctx.shadowBlur = 10;
-    marginGems.forEach(([gx, gy]) => {
-      ctx.beginPath();
-      ctx.arc(gx, gy, 3.4, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    ctx.restore();
-
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.needsUpdate = true;
-    return tex;
-  }
-
-  function create3DButterfly(scale = 0.55, colorHue = 'pink') {
-    const butterflyGroup = new THREE.Group();
-    const wingTex = createWingTexture(colorHue);
-
-    // Left Wing: extends from X=0 to X=+1.05
-    const wingGeo = new THREE.PlaneGeometry(1.05, 1.05, 4, 4);
-    wingGeo.translate(0.525, 0, 0); // Pivot root exactly at X=0
-
-    const wingMat = new THREE.MeshBasicMaterial({
-      map: wingTex,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.98,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-
-    const leftWing = new THREE.Group();
-    const leftMesh = new THREE.Mesh(wingGeo, wingMat);
-    leftWing.add(leftMesh);
-    butterflyGroup.add(leftWing);
-
-    // Right Wing: cleanly mirrored vertices on X with flipped winding index
-    const rightWingGeo = wingGeo.clone();
-    const pos = rightWingGeo.attributes.position;
-    for (let i = 0; i < pos.count; i++) {
-      pos.setX(i, -pos.getX(i)); // Extends from X=0 to X=-1.05
-    }
-    pos.needsUpdate = true;
-
-    const index = rightWingGeo.index;
-    if (index) {
-      for (let i = 0; i < index.count; i += 3) {
-        const temp = index.getX(i);
-        index.setX(i, index.getX(i + 2));
-        index.setX(i + 2, temp);
-      }
-      index.needsUpdate = true;
-    }
-
-    const rightWing = new THREE.Group();
-    const rightMesh = new THREE.Mesh(rightWingGeo, wingMat);
-    rightWing.add(rightMesh);
-    butterflyGroup.add(rightWing);
-
-    // Sleek glowing body along Y axis (natively between wings at X=0, Z=0)
-    const bodyGeo = new THREE.CylinderGeometry(0.02, 0.012, 0.46, 8);
-    const bodyColor = (colorHue === 'cyan') ? 0x0284c7 : (colorHue === 'gold' ? 0xd97706 : (colorHue === 'purple' ? 0x7c3aed : 0xbe123c));
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: bodyColor,
-      emissive: 0xffffff,
-      emissiveIntensity: 0.45,
-      roughness: 0.2,
-    });
-    const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
-    butterflyGroup.add(bodyMesh);
-
-    // Cute glowing head at Y = +0.24
-    const headGeo = new THREE.SphereGeometry(0.028, 8, 8);
-    const headMesh = new THREE.Mesh(headGeo, bodyMat);
-    headMesh.position.y = 0.24;
-    butterflyGroup.add(headMesh);
-
-    // Delicate curved antennae starting at head and curving gracefully
-    const antCurveL = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0.005, 0.25, 0.005),
-      new THREE.Vector3(0.035, 0.33, 0.02),
-      new THREE.Vector3(0.07, 0.39, 0.035),
-    ]);
-    const antCurveR = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(-0.005, 0.25, 0.005),
-      new THREE.Vector3(-0.035, 0.33, 0.02),
-      new THREE.Vector3(-0.07, 0.39, 0.035),
-    ]);
-    const antMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const antGeoL = new THREE.TubeGeometry(antCurveL, 8, 0.004, 4, false);
-    const antGeoR = new THREE.TubeGeometry(antCurveR, 8, 0.004, 4, false);
-    butterflyGroup.add(new THREE.Mesh(antGeoL, antMat));
-    butterflyGroup.add(new THREE.Mesh(antGeoR, antMat));
-
-    butterflyGroup.scale.set(scale, scale, scale);
-
-    return {
-      group: butterflyGroup,
-      leftWing,
-      rightWing,
-      phase: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.35 + 0.65,
-      flapSpeed: Math.random() * 4 + 16,
-    };
-  }
-
-  // 5 Background Butterflies gracefully soaring across mobile screen
-  const bgButterflies = [
-    create3DButterfly(0.68, 'pink'),
-    create3DButterfly(0.62, 'cyan'),
-    create3DButterfly(0.72, 'gold'),
-    create3DButterfly(0.64, 'purple'),
-    create3DButterfly(0.68, 'pink'),
-  ];
-  bgButterflies.forEach((b, i) => {
-    // Keep X strictly within visible bounds of mobile screen (FOV 60, Z=6, width is ~4 units)
-    b.radiusX = 1.25 + (i % 3) * 0.22;
-    b.radiusY = 2.4 + (i % 2) * 0.45;
-    b.radiusZ = 1.0 + (i % 2) * 0.8;
-    b.yOffset = (i - 2) * 0.4;
-    scene.add(b.group);
-  });
 
   function animateHearts() {
     requestAnimationFrame(animateHearts);
@@ -616,27 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     heartGeo.attributes.position.needsUpdate = true;
     heartField.rotation.y += 0.0004;
-
-    // Animate Background 3D Flapping Butterflies with natural banking
-    bgButterflies.forEach((b) => {
-      const t = performance.now() * 0.001;
-      const flap = Math.sin(t * b.flapSpeed + b.phase) * 0.95;
-      b.leftWing.rotation.y = flap;
-      b.rightWing.rotation.y = -flap;
-
-      // Figure-8 flight trajectory across mobile viewport
-      const x = Math.sin(t * b.speed + b.phase) * b.radiusX;
-      const y = Math.cos(t * b.speed * 0.75 + b.phase) * b.radiusY + Math.sin(t * 1.8 + b.phase) * 0.35 + b.yOffset;
-      const z = Math.cos(t * b.speed * 1.1 + b.phase) * b.radiusZ;
-
-      const dx = Math.cos(t * b.speed + b.phase) * b.speed * b.radiusX;
-      const dy = -Math.sin(t * b.speed * 0.75 + b.phase) * b.speed * 0.75 * b.radiusY;
-
-      b.group.position.set(x, y, z);
-      b.group.rotation.z = -dx * 0.35 + Math.sin(t * b.flapSpeed + b.phase) * 0.06;
-      b.group.rotation.x = -dy * 0.25;
-      b.group.rotation.y = Math.sin(t * 1.2 + b.phase) * 0.2;
-    });
 
     renderer.render(scene, camera);
   }
@@ -891,19 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emberMesh = new THREE.Points(emberGeo, emberMat);
     heart3DGroup.add(emberMesh);
 
-    // 4 Orbiting 3D Flapping Butterflies dancing around the Heart
-    const heartButterflies = [
-      create3DButterfly(0.52, 'pink'),
-      create3DButterfly(0.48, 'gold'),
-      create3DButterfly(0.50, 'cyan'),
-      create3DButterfly(0.46, 'purple'),
-    ];
-    heartButterflies.forEach((b, i) => {
-      b.orbitRadius = 1.35 + (i % 2) * 0.22; // Stays well within canvas boundary
-      b.orbitSpeed = 0.85 + i * 0.22;
-      b.heightOffset = (i - 1.5) * 0.35;
-      heart3DGroup.add(b.group);
-    });
+
 
     // ========================================================================
     // 3. ANIMATION RENDER LOOP: ROMANTIC 3D SWAY & HEARTBEAT
@@ -969,22 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
         emberGeo.attributes.position.needsUpdate = true;
       }
 
-      // Animate 4 3D Orbiting Flapping Butterflies dancing around Heart
-      heartButterflies.forEach((b) => {
-        const flap = Math.sin(time * b.flapSpeed + b.phase) * 0.95;
-        b.leftWing.rotation.y = flap;
-        b.rightWing.rotation.y = -flap;
 
-        const angle = time * b.orbitSpeed + b.phase;
-        const x = Math.cos(angle) * b.orbitRadius;
-        const y = Math.sin(angle * 1.4) * 0.45 + Math.sin(time * 2.5 + b.phase) * 0.15 + b.heightOffset;
-        const z = Math.sin(angle) * b.orbitRadius;
-
-        b.group.position.set(x, y, z);
-        b.group.rotation.y = -angle + Math.PI / 2;
-        b.group.rotation.x = Math.sin(angle) * 0.25;
-        b.group.rotation.z = Math.sin(time * b.flapSpeed + b.phase) * 0.15;
-      });
 
       heart3DRenderer.render(heart3DScene, heart3DCamera);
     }
